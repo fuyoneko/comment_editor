@@ -15,12 +15,12 @@
 
 ## Use（いますぐ使う）
 
-[おにぎり電卓（Github Pages）](https://fuyoneko.github.io/comment_editor/)
+[チャット原稿（Github Pages）](https://fuyoneko.github.io/comment_editor/)
 
 |形式|URL|
 |:--|:--|
 |URL| https://fuyoneko.github.io/comment_editor/ |
-|短縮URL| dummy |
+|短縮URL| https://bit.ly/3EQTp2U |
 
 ## License（ライセンス）
 
