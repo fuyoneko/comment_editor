@@ -5,6 +5,7 @@
       <v-col cols="auto">
         <v-textarea
           v-model="value"
+          ref="genko"
           placeholder="日本語を入力"
           :style="textareaStyle"
           no-resize
@@ -156,6 +157,20 @@ export default {
         TextFormatter.getLength(text || "") <= this.wordsMaxLength ||
         `文字数は${this.wordsMaxLength}文字が上限です`
       );
+    },
+    /**
+     * カーソル位置にテキストを挿入する
+     */
+    insertTextOnCursor(text) {
+      // テキストエリアを取得する
+      const textarea = this.$refs.genko.$el.querySelector("textarea");
+      // カーソル位置を取得する
+      const start = textarea.selectionStart;
+      // カーソルよりも前のテキスト、カーソルよりも後ろのテキストを取得する
+      const before = this.value.substring(0, start);
+      const after = this.value.substring(start);
+      // カーソル位置に引数のテキストを挿入する
+      this.value = before + text + after;
     }
   }
 };

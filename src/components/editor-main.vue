@@ -14,7 +14,7 @@
           <v-card flat class="mt-1" :style="item.style">
             <v-card-text>
               <template v-if="item.key == 1">
-                <editor />
+                <editor ref="genkoEditor" />
                 <v-divider></v-divider>
                 <v-row class="mt-1" justify="start">
                   <v-col cols="auto" v-for="icon in editIcons" :key="icon.key">
@@ -59,6 +59,7 @@
           </v-card>
         </v-tab-item>
       </v-tabs-items>
+      <emoji-dialog ref="emojiEditor" @on-clicked-emoji="appendEmoji" />
     </v-card>
     <!-- 履歴からの読み出しダイアログ -->
     <confirm-dialog ref="readFromHistory" @on-click-ok="readTextToEditor">
@@ -103,11 +104,13 @@ import TextFormatter from "./logic/text-formatter";
 import Editor from "./editor";
 import Preview from "./preview";
 import ConfirmDialog from "./dialog/confirm-dialog";
+import EmojiDialog from "./dialog/emoji-dialog";
 export default {
   components: {
     editor: Editor,
     preview: Preview,
-    "confirm-dialog": ConfirmDialog
+    "confirm-dialog": ConfirmDialog,
+    "emoji-dialog": EmojiDialog
   },
   data() {
     return {
@@ -152,6 +155,13 @@ export default {
           color: "primary",
           title: "縦書",
           onClick: this.onClickTransposeEdit
+        },
+        {
+          key: 3,
+          icon: "mdi-emoticon-excited-outline",
+          color: "orange",
+          title: "絵文字",
+          onClick: this.onClickEmotionButton
         }
       ]
     };
@@ -227,6 +237,13 @@ export default {
       this.$refs.transposeEditor.showDialog();
     },
     /**
+     * 顔文字ボタンが押下された
+     */
+    onClickEmotionButton() {
+      //
+      this.$refs.emojiEditor.showDialog();
+    },
+    /**
      * 原稿用紙にテキストを反映する
      */
     readTextToEditor() {
@@ -252,6 +269,19 @@ export default {
         date: `${new Date(Date.now()).toLocaleString()}`,
         text: original
       });
+    },
+    /**
+     * 絵文字を原稿用紙に追加する
+     */
+    appendEmoji(code) {
+      try {
+        // 原稿用紙に直接追記を要求する
+        this.$refs.genkoEditor[0].insertTextOnCursor(code.code);
+      } catch {
+        // 追記できないのなら後ろに登録する
+        const original = this.$store.getters.rawText;
+        this.$store.commit("setRawText", original + code.code);
+      }
     }
   }
 };

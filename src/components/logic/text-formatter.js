@@ -1,4 +1,5 @@
 import Line from "../model/line";
+import Emoji from "../logic/emoji-defines";
 
 class TextFormatterClass {
   getLength(text) {
@@ -30,7 +31,7 @@ class TextFormatterClass {
    * @param {末尾を埋める文字} fillCharacter
    */
   parseToCopyText(text, fillCharacter) {
-    return this.#parseToLines(text)
+    const textData = this.#parseToLines(text)
       .map((line, index, array) => {
         if (index == array.length - 1) {
           return line.getRawText();
@@ -38,6 +39,8 @@ class TextFormatterClass {
         return line.getFilledText(fillCharacter);
       })
       .join("");
+    // 絵文字を編集中表記から変換する
+    return Emoji.convertToCopyText(textData);
   }
 
   /**
@@ -45,9 +48,11 @@ class TextFormatterClass {
    * @param {変換元のテキストデータ} text
    */
   parseToPreviewText(text) {
-    return this.#parseToLines(text)
+    const textData = this.#parseToLines(text)
       .map((line) => line.getPreviewText())
       .join("");
+    // 絵文字を編集中表記から変換する
+    return Emoji.convertToPreviewText(textData);
   }
 
   /**
