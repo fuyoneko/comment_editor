@@ -27,6 +27,20 @@
             <div>改行することで、見やすく整理された、分かりやすい情報を共有できます。</div>
           </v-card-text>
           <v-card-text>
+            <div class="text-h6 content-subtitle">更新</div>
+            <div>
+              <v-list-item two-line>
+                <v-list-item-content>
+                  <v-list-item-title>2021/11/21</v-list-item-title>
+                  <v-list-item-subtitle>
+                    ・絵文字の編集に対応しました
+                    <br />・アスキーアートが崩れる不具合を修正しました
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </div>
+          </v-card-text>
+          <v-card-text>
             <div class="text-h6 content-subtitle">動作環境</div>
             <div>
               <v-chip class="ma-2">
