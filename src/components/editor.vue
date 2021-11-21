@@ -171,6 +171,13 @@ export default {
       const after = this.value.substring(start);
       // カーソル位置に引数のテキストを挿入する
       this.value = before + text + after;
+      // カーソル位置を移動する
+      this.$nextTick(() => {
+        const moveTo = start + text.length;
+        textarea.setSelectionRange(moveTo, moveTo);
+        // フォーカスをあてる
+        textarea.focus();
+      });
     }
   }
 };
